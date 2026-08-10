@@ -5,10 +5,10 @@ import { ArrowDownRight, ArrowRight } from 'lucide-react'
 export function Hero() {
   return (
     <section id="top" className="hero-stage relative min-h-[100svh] overflow-hidden bg-primary text-primary-foreground">
-      <div className="absolute inset-y-0 right-0 w-full md:w-[57%]">
-        <Image src="/images/olga-main.jpg" alt="Дмитриева Ольга — эксперт по недвижимости" fill priority sizes="(max-width: 768px) 100vw, 58vw" className="hero-image object-cover object-[62%_center] md:object-[58%_20%]" />
+      <div className="absolute inset-0">
+        <Image src="/images/olga-main.jpg" alt="Дмитриева Ольга — эксперт по недвижимости" fill priority sizes="100vw" className="hero-image object-cover object-[62%_center] md:object-[58%_20%]" />
       </div>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(26_35_45)_0%,rgb(26_35_45/.96)_39%,rgb(26_35_45/.56)_70%,rgb(26_35_45/.15)_100%)] md:bg-[linear-gradient(90deg,rgb(26_35_45)_0%,rgb(26_35_45/.98)_38%,rgb(26_35_45/.22)_73%)]" aria-hidden="true" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(26_35_45/.9)_0%,rgb(26_35_45/.7)_38%,rgb(26_35_45/.3)_70%,rgb(26_35_45/.08)_100%)] md:bg-[linear-gradient(90deg,rgb(26_35_45/.88)_0%,rgb(26_35_45/.62)_42%,rgb(26_35_45/.18)_74%,transparent_100%)]" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-primary to-transparent" aria-hidden="true" />
       <div className="section-shell relative flex min-h-[100svh] flex-col justify-end pb-12 pt-32 md:pb-16">
         <div className="max-w-[980px]">
