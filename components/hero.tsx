@@ -1,28 +1,28 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShieldCheck, Scale, Landmark, ArrowDownRight } from 'lucide-react'
+import { ArrowDownRight, ArrowRight } from 'lucide-react'
 
 export function Hero() {
   return (
-    <section id="top" className="relative flex min-h-[min(920px,100svh)] items-end overflow-hidden bg-primary">
-      <Image src="/images/olga-main.jpg" alt="Дмитриева Ольга — эксперт по недвижимости" fill priority sizes="100vw" className="object-cover object-[68%_center] md:object-[75%_20%]" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(25_34_44/.93)_0%,rgb(25_34_44/.72)_48%,rgb(25_34_44/.18)_100%)]" aria-hidden="true" />
-      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-primary/75 to-transparent" aria-hidden="true" />
-      <div className="section-shell relative w-full pb-20 pt-32 md:pb-24">
-        <div className="max-w-3xl">
-          <p className="hero-reveal section-label text-[#c9b58c]">Чувашия · вся Россия · опыт более 5 лет</p>
-          <h1 className="hero-reveal hero-reveal-2 mt-6 max-w-3xl font-serif text-[clamp(2.75rem,6vw,5.5rem)] leading-[.98] tracking-[-.035em] text-primary-foreground text-balance">Эксперт по недвижимости <span className="italic text-[#d5c39c]">Дмитриева Ольга</span></h1>
-          <div className="rule-grow mt-7 h-px max-w-xl bg-[#c9b58c]/60" />
-          <p className="hero-reveal hero-reveal-3 mt-7 max-w-xl text-base leading-relaxed text-primary-foreground/82 md:text-lg">Комфортная, безопасная и успешная сделка под ключ. Организационные, юридические вопросы и расчёты — включая сложные сделки в Чувашии и по всей России.</p>
-          <div className="hero-reveal hero-reveal-3 mt-8 flex flex-wrap gap-3"><a href="#contacts" className="premium-button rounded-full border border-[#c9b58c] bg-[#c9b58c] px-7 py-3.5 text-sm font-medium text-primary">Получить консультацию</a><Link href="/catalog" className="premium-button rounded-full border border-primary-foreground/35 px-7 py-3.5 text-sm font-medium text-primary-foreground">Каталог объектов</Link></div>
-          <ul className="hero-reveal hero-reveal-3 mt-10 grid max-w-3xl gap-4 border-t border-primary-foreground/18 pt-6 text-sm text-primary-foreground/78 md:grid-cols-3">
-            <li className="flex items-start gap-3"><ShieldCheck className="mt-0.5 size-4 shrink-0 text-[#c9b58c]" aria-hidden="true" /><span>Сделка под ключ — до передачи ключей</span></li>
-            <li className="flex items-start gap-3"><Scale className="mt-0.5 size-4 shrink-0 text-[#c9b58c]" aria-hidden="true" /><span>В синергии с профессиональным юристом</span></li>
-            <li className="flex items-start gap-3"><Landmark className="mt-0.5 size-4 shrink-0 text-[#c9b58c]" aria-hidden="true" /><span>Ипотечный брокер в команде</span></li>
-          </ul>
-        </div>
+    <section id="top" className="hero-stage relative min-h-[100svh] overflow-hidden bg-primary text-primary-foreground">
+      <div className="absolute inset-y-0 right-0 w-full md:w-[57%]">
+        <Image src="/images/olga-main.jpg" alt="Дмитриева Ольга — эксперт по недвижимости" fill priority sizes="(max-width: 768px) 100vw, 58vw" className="hero-image object-cover object-[62%_center] md:object-[58%_20%]" />
       </div>
-      <a href="#about" className="absolute bottom-7 right-5 hidden items-center gap-2 text-[10px] uppercase tracking-[.25em] text-primary-foreground/60 transition-colors hover:text-primary-foreground md:flex" aria-label="Перейти к разделу обо мне">Далее <ArrowDownRight className="size-4" /></a>
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(26_35_45)_0%,rgb(26_35_45/.96)_39%,rgb(26_35_45/.56)_70%,rgb(26_35_45/.15)_100%)] md:bg-[linear-gradient(90deg,rgb(26_35_45)_0%,rgb(26_35_45/.98)_38%,rgb(26_35_45/.22)_73%)]" aria-hidden="true" />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-primary to-transparent" aria-hidden="true" />
+      <div className="section-shell relative flex min-h-[100svh] flex-col justify-end pb-12 pt-32 md:pb-16">
+        <div className="max-w-[980px]">
+          <p className="hero-kicker section-label text-[#d5c39c]">Private real estate advisor · Россия</p>
+          <h1 className="hero-title mt-7 max-w-[920px] font-serif text-[clamp(3.6rem,7.8vw,8rem)] leading-[.86] tracking-[-.055em] text-balance">
+            Точные решения<br /><span className="ml-[9vw] italic text-[#d5c39c]">в недвижимости</span>
+          </h1>
+          <div className="hero-copy mt-9 grid max-w-4xl gap-8 border-t border-primary-foreground/25 pt-7 md:grid-cols-[1fr_auto] md:items-end">
+            <div><p className="text-xs uppercase tracking-[.24em] text-primary-foreground/55">Дмитриева Ольга</p><p className="mt-3 max-w-xl text-base leading-7 text-primary-foreground/78 md:text-lg">Персональное сопровождение покупки и продажи — от первого решения до передачи ключей.</p></div>
+            <div className="flex flex-wrap gap-3"><a href="#contacts" className="premium-button inline-flex min-h-13 items-center gap-3 border border-[#c9b58c] bg-[#c9b58c] px-7 text-sm font-semibold uppercase tracking-[.12em] text-primary">Консультация <ArrowRight className="size-4" /></a><Link href="/catalog" className="premium-button inline-flex min-h-13 items-center border border-primary-foreground/35 px-7 text-sm font-medium uppercase tracking-[.12em] text-primary-foreground">Объекты</Link></div>
+          </div>
+        </div>
+        <div className="mt-12 flex items-end justify-between gap-6"><p className="max-w-xs text-[10px] uppercase leading-5 tracking-[.2em] text-primary-foreground/45">5+ лет опыта · юридическая экспертиза · сложные сделки</p><a href="#about" className="group hidden items-center gap-3 text-[10px] uppercase tracking-[.25em] text-primary-foreground/55 md:flex">Исследовать <span className="flex size-10 items-center justify-center border border-primary-foreground/25 transition-transform duration-500 group-hover:rotate-45"><ArrowDownRight className="size-4" /></span></a></div>
+      </div>
     </section>
   )
 }

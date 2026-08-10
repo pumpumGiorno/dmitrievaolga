@@ -1,19 +1,18 @@
 import Image from 'next/image'
-import { Reveal } from '@/components/reveal'
+import { MotionSection } from '@/components/motion-section'
 
 export function EditorialInterlude() {
   return (
-    <section className="section-shell py-6 md:py-12" aria-label="Подход к работе">
-      <Reveal>
-        <div className="relative min-h-[480px] overflow-hidden md:min-h-[620px]">
-          <Image src="/objects/7848064247/1.png" alt="Интерьер объекта недвижимости" fill sizes="(max-width: 768px) 100vw, 1152px" className="object-cover transition-transform duration-[1600ms] ease-out hover:scale-[1.025]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/85 via-primary/20 to-transparent" aria-hidden="true" />
-          <div className="absolute inset-x-0 bottom-0 p-7 md:p-14">
-            <p className="section-label text-[#d5c39c]">Точность решения</p>
-            <blockquote className="mt-5 max-w-3xl font-serif text-[clamp(2rem,4vw,4rem)] leading-[1.08] tracking-[-.025em] text-primary-foreground text-balance">«Недвижимость — это не квадратные метры. Это решение, в котором нельзя ошибиться».</blockquote>
-          </div>
+    <MotionSection>
+      <section className="cinematic relative min-h-[78svh] overflow-hidden bg-primary md:min-h-[94svh]" aria-label="Подход к работе">
+        <div data-parallax className="absolute -inset-y-12 inset-x-0"><Image src="/objects/7848064247/1.png" alt="Современный интерьер объекта недвижимости" fill sizes="100vw" className="object-cover" /></div>
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(24_33_43/.82),rgb(24_33_43/.18)_75%),linear-gradient(0deg,rgb(24_33_43/.78),transparent_55%)]" aria-hidden="true" />
+        <div className="section-shell relative flex min-h-[78svh] flex-col justify-between py-14 text-primary-foreground md:min-h-[94svh] md:py-20">
+          <div className="flex items-center justify-between border-t border-primary-foreground/30 pt-5"><p className="section-label text-[#d5c39c]">Философия работы</p><span className="font-serif text-2xl text-primary-foreground/40">02</span></div>
+          <blockquote data-motion="reveal" className="max-w-5xl font-serif text-[clamp(2.8rem,6.7vw,7rem)] leading-[.92] tracking-[-.045em] text-balance">Недвижимость —<br />не квадратные метры.<br /><em className="ml-[8vw] font-normal text-[#d5c39c]">Это решение,</em><br />в котором нельзя ошибиться.</blockquote>
+          <div className="grid gap-6 border-t border-primary-foreground/25 pt-6 md:grid-cols-2"><p className="text-xs uppercase tracking-[.22em] text-primary-foreground/55">Точность · конфиденциальность · ответственность</p><p className="max-w-md text-sm leading-6 text-primary-foreground/70 md:justify-self-end">Каждая сделка рассматривается не как процесс, а как персональная стратегия защиты ваших интересов.</p></div>
         </div>
-      </Reveal>
-    </section>
+      </section>
+    </MotionSection>
   )
 }

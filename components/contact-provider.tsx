@@ -196,7 +196,7 @@ export function ContactForm({
       <button
         type="submit"
         disabled={sending}
-        className="mt-1 rounded-full bg-gold px-8 py-3.5 text-sm font-medium text-gold-foreground transition-all hover:bg-gold/90 hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+        className="premium-button mt-3 min-h-14 border border-primary bg-primary px-8 text-xs font-semibold uppercase tracking-[.14em] text-primary-foreground disabled:cursor-not-allowed disabled:opacity-60"
       >
         {sending ? 'Отправляем…' : 'Отправить заявку'}
       </button>
