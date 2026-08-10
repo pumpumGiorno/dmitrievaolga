@@ -1,69 +1,17 @@
 import Link from 'next/link'
 import { CONTACTS } from '@/lib/contacts'
 
-const FOOTER_LINKS = [
-  { href: '/catalog', label: 'Объекты' },
-  { href: '/sales', label: 'Продажа' },
-  { href: '/purchase', label: 'Покупка' },
-  { href: '/legal', label: 'Юридическое сопровождение' },
-  { href: '/mortgage', label: 'Ипотека' },
-]
+const FOOTER_LINKS = [{ href: '/catalog', label: 'Объекты' }, { href: '/sales', label: 'Продажа' }, { href: '/purchase', label: 'Покупка' }, { href: '/legal', label: 'Юридическое сопровождение' }, { href: '/mortgage', label: 'Ипотека' }]
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border bg-primary py-12 text-primary-foreground">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 md:px-6">
-        <div className="flex flex-col items-center gap-6 text-center md:flex-row md:items-start md:justify-between md:text-left">
-          <div>
-            <p className="font-serif text-xl">Дмитриева Ольга</p>
-            <p className="mt-1 text-sm text-primary-foreground/70">
-              Эксперт по недвижимости — Чувашия и вся Россия
-            </p>
-            <div className="mt-4 flex flex-col items-center gap-1.5 md:items-start">
-              <a
-                href={CONTACTS.phoneHref}
-                className="text-sm font-medium text-primary-foreground transition-colors hover:text-primary-foreground/80"
-              >
-                {CONTACTS.phoneDisplay}
-              </a>
-              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 md:justify-start">
-                <a
-                  href={CONTACTS.telegramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground"
-                >
-                  Telegram {CONTACTS.telegramHandle}
-                </a>
-                <a
-                  href={CONTACTS.maxUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-primary-foreground/70 transition-colors hover:text-primary-foreground"
-                >
-                  MAX
-                </a>
-              </div>
-            </div>
-          </div>
-          <nav aria-label="Разделы сайта">
-            <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 md:justify-end">
-              {FOOTER_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+    <footer className="overflow-hidden border-t border-primary-foreground/10 bg-primary py-14 text-primary-foreground md:py-20">
+      <div className="section-shell flex flex-col gap-12">
+        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr]">
+          <div><p className="section-label text-[#c9b58c]">Частный эксперт по недвижимости</p><p className="mt-4 font-serif text-3xl">Дмитриева Ольга</p><p className="mt-3 max-w-md text-sm leading-relaxed text-primary-foreground/60">Комфортные, безопасные и успешные сделки в Чувашии и по всей России.</p><div className="mt-6 flex flex-wrap gap-5 text-sm"><a href={CONTACTS.phoneHref} className="editorial-link">{CONTACTS.phoneDisplay}</a><a href={CONTACTS.telegramUrl} target="_blank" rel="noopener noreferrer" className="editorial-link text-primary-foreground/70">Telegram</a><a href={CONTACTS.maxUrl} target="_blank" rel="noopener noreferrer" className="editorial-link text-primary-foreground/70">MAX</a></div></div>
+          <nav aria-label="Разделы сайта"><p className="section-label text-primary-foreground/45">Навигация</p><ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-4">{FOOTER_LINKS.map((link) => <li key={link.href}><Link href={link.href} className="editorial-link text-sm text-primary-foreground/75 hover:text-primary-foreground">{link.label}</Link></li>)}</ul></nav>
         </div>
-        <p className="border-t border-primary-foreground/15 pt-6 text-center text-xs text-primary-foreground/60 md:text-left">
-          {new Date().getFullYear()} — Комфортные, безопасные и успешные сделки под ключ
-        </p>
+        <div className="border-t border-primary-foreground/15 pt-7"><p className="font-serif text-[clamp(2.4rem,7vw,6.8rem)] leading-none tracking-[-.04em] text-primary-foreground/[.07]">ДМИТРИЕВА ОЛЬГА</p><p className="mt-7 text-xs text-primary-foreground/45">{new Date().getFullYear()} — Все права защищены</p></div>
       </div>
     </footer>
   )

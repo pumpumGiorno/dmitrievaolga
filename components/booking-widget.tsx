@@ -131,21 +131,21 @@ export function BookingWidget() {
   const selectedDay = days.find((d) => d.value === selectedDate)
 
   return (
-    <section id="booking" className="border-t border-border/60 bg-secondary/40 py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+    <section id="booking" className="relative overflow-hidden border-t border-border bg-secondary py-24 md:py-40">
+      <div className="section-shell relative">
+        <span className="pointer-events-none absolute -right-8 -top-28 hidden font-serif text-[16rem] leading-none text-primary/[.04] lg:block" aria-hidden="true">05</span>
         <Reveal>
-          <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold">Онлайн-запись</p>
-          <h2 className="mt-3 max-w-xl text-balance font-serif text-3xl text-primary md:text-4xl">
-            Запишитесь на консультацию в удобное время
-          </h2>
-          <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">
+          <div className="grid gap-7 md:grid-cols-[.7fr_1.3fr] md:items-end">
+            <p className="section-label">05 / Онлайн-запись</p>
+            <div><h2 className="display-title max-w-4xl">Время для <em className="font-normal text-gold">вашего решения</em></h2>
+          <p className="mt-6 max-w-xl leading-7 text-muted-foreground">
             Выберите дату и время — Ольга позвонит вам в назначенный час. Консультация бесплатна и
-            ни к чему не обязывает.
-          </p>
+              ни к чему не обязывает.
+          </p></div></div>
         </Reveal>
 
         <Reveal delay={100}>
-          <div className="mt-10 rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8">
+          <div className="mt-12 border border-border bg-card p-6 shadow-[0_40px_90px_-65px_rgb(32_44_56/.65)] md:p-12">
             {submitted ? (
               <div className="flex min-h-64 flex-col items-center justify-center gap-4 text-center">
                 <span className="flex size-16 items-center justify-center rounded-full bg-gold/15">
@@ -183,10 +183,10 @@ export function BookingWidget() {
                           role="radio"
                           aria-checked={active}
                           onClick={() => setSelectedDate(day.value)}
-                          className={`flex min-w-16 shrink-0 flex-col items-center gap-0.5 rounded-2xl border px-3 py-3 transition-all ${
+                          className={`flex min-w-20 shrink-0 flex-col items-center gap-1 border px-4 py-4 transition-all duration-300 ${
                             active
-                              ? 'border-gold bg-gold/10 text-primary'
-                              : 'border-border bg-background text-muted-foreground hover:border-gold/50'
+                              ? 'border-primary bg-primary text-primary-foreground shadow-lg'
+                              : 'border-border bg-background text-muted-foreground hover:-translate-y-1 hover:border-gold'
                           }`}
                         >
                           <span className="text-[11px] uppercase">{day.isToday ? 'сегодня' : day.weekday}</span>
@@ -222,9 +222,9 @@ export function BookingWidget() {
                           aria-checked={active}
                           disabled={booked || loadingSlots}
                           onClick={() => setSelectedSlot(slot)}
-                          className={`min-w-20 rounded-full border px-4 py-2.5 text-sm transition-all disabled:cursor-not-allowed ${
+                          className={`min-w-24 border px-5 py-3 text-sm transition-all duration-300 disabled:cursor-not-allowed ${
                             active
-                              ? 'border-gold bg-gold text-gold-foreground font-medium'
+                              ? 'border-primary bg-primary text-primary-foreground font-semibold shadow-md'
                               : booked
                                 ? 'border-border bg-muted text-muted-foreground/50 line-through'
                                 : 'border-border bg-background text-foreground hover:border-gold/60'
@@ -248,7 +248,7 @@ export function BookingWidget() {
                       type="text"
                       autoComplete="name"
                       placeholder="Как к вам обращаться"
-                      className="rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold"
+                      className="form-control placeholder:text-muted-foreground focus:border-gold"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -261,7 +261,7 @@ export function BookingWidget() {
                       type="tel"
                       autoComplete="tel"
                       placeholder="+7 (___) ___-__-__"
-                      className="rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold"
+                      className="form-control placeholder:text-muted-foreground focus:border-gold"
                     />
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export function BookingWidget() {
                     name="comment"
                     rows={2}
                     placeholder="Кратко опишите ваш вопрос (необязательно)"
-                    className="resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold"
+                    className="resize-none form-control placeholder:text-muted-foreground focus:border-gold"
                   />
                 </div>
 
@@ -289,7 +289,7 @@ export function BookingWidget() {
                   <button
                     type="submit"
                     disabled={sending}
-                    className="rounded-full bg-gold px-8 py-3.5 text-sm font-medium text-gold-foreground transition-all hover:bg-gold/90 hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="premium-button min-h-14 border border-primary bg-primary px-8 text-xs font-semibold uppercase tracking-[.14em] text-primary-foreground disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {sending ? 'Записываем…' : 'Записаться на консультацию'}
                   </button>

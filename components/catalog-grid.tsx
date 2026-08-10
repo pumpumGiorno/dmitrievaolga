@@ -61,16 +61,16 @@ export function CatalogGrid({ listings }: { listings: Listing[] }) {
   }, [listings, category, rooms, area, location, showRooms, showArea])
 
   function chipClass(active: boolean) {
-    return `rounded-full px-4 py-2 text-sm transition-all ${
+    return `border px-5 py-2.5 text-xs font-medium uppercase tracking-[.1em] transition-all ${
       active
-        ? 'bg-primary text-primary-foreground shadow-sm'
-        : 'border border-border bg-card text-muted-foreground hover:border-gold hover:text-primary'
+        ? 'border-primary bg-primary text-primary-foreground shadow-sm'
+        : 'border-border bg-card text-muted-foreground hover:-translate-y-0.5 hover:border-gold hover:text-primary'
     }`
   }
 
   return (
     <div>
-      <div className="mb-10 flex flex-col gap-5 rounded-3xl border border-border bg-card p-5 md:p-7">
+      <div className="mb-14 flex flex-col gap-7 border-y border-border bg-card/55 px-5 py-8 md:px-8 md:py-10">
         <p className="flex items-center gap-2 text-sm font-medium text-primary">
           <SlidersHorizontal className="size-4 text-gold" aria-hidden="true" />
           Фильтры
@@ -174,13 +174,13 @@ export function CatalogGrid({ listings }: { listings: Listing[] }) {
           <p className="font-serif text-xl text-primary">Ничего не нашлось</p>
           <p className="mx-auto mt-2 max-w-md leading-relaxed text-muted-foreground">
             Попробуйте изменить фильтры — или оставьте заявку, и я подберу объект под ваш запрос,
-            включая вари��нты, которых нет в открытом каталоге.
+            включая варианты, которых нет в открытом каталоге.
           </p>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((listing) => (
-            <ListingCard key={listing.id} listing={listing} />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((listing, index) => (
+            <ListingCard key={listing.id} listing={listing} featured={index === 0} />
           ))}
         </div>
       )}

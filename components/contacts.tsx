@@ -1,64 +1,17 @@
-import { Phone, Send, MessageSquare } from 'lucide-react'
-import { Reveal } from '@/components/reveal'
+import { Phone, Send, MessageSquare, ArrowUpRight } from 'lucide-react'
+import { MotionSection } from '@/components/motion-section'
 import { ContactForm } from '@/components/contact-provider'
 import { CONTACTS } from '@/lib/contacts'
 
 export function Contacts() {
   return (
-    <section id="contacts" className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-24">
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-        <Reveal>
-          <div className="flex h-full flex-col justify-center">
-            <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold">Контакты</p>
-            <h2 className="mt-3 font-serif text-3xl text-primary text-balance md:text-4xl">
-              Обсудим вашу задачу?
-            </h2>
-            <p className="mt-4 leading-relaxed text-muted-foreground">
-              Оставьте заявку — я свяжусь с вами в течение 15 минут в рабочее время, отвечу на
-              вопросы и предложу план действий. Консультация ни к чему вас не обязывает.
-            </p>
-
-            <div className="mt-8 flex flex-col gap-3">
-              <a
-                href={CONTACTS.phoneHref}
-                className="inline-flex w-fit items-center gap-3 rounded-full border border-border bg-card px-6 py-3.5 text-sm font-medium text-primary transition-colors hover:border-gold"
-              >
-                <Phone className="size-4 text-gold" aria-hidden="true" />
-                {CONTACTS.phoneDisplay}
-              </a>
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={CONTACTS.telegramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3.5 text-sm font-medium text-primary transition-colors hover:border-gold"
-                >
-                  <Send className="size-4 text-gold" aria-hidden="true" />
-                  Telegram
-                </a>
-                <a
-                  href={CONTACTS.maxUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3.5 text-sm font-medium text-primary transition-colors hover:border-gold"
-                >
-                  <MessageSquare className="size-4 text-gold" aria-hidden="true" />
-                  MAX
-                </a>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Telegram: {CONTACTS.telegramHandle} · MAX — по ссылке выше
-              </p>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={120}>
-          <div className="rounded-3xl border border-border bg-card p-7 md:p-9">
-            <ContactForm />
-          </div>
-        </Reveal>
-      </div>
-    </section>
+    <MotionSection className="bg-card py-24 md:py-40">
+      <section id="contacts" className="section-shell">
+        <div className="grid gap-16 lg:grid-cols-[.9fr_1.1fr] lg:gap-24">
+          <div data-motion="reveal" className="flex flex-col"><p className="section-label">06 / Личный контакт</p><h2 className="display-title mt-7">Начнём с вашей <em className="font-normal text-gold">задачи</em></h2><p className="mt-8 max-w-lg text-base leading-7 text-muted-foreground">Оставьте заявку — я свяжусь с вами в течение 15 минут в рабочее время и предложу ясный план действий.</p><div className="mt-12 border-t border-border"><a href={CONTACTS.phoneHref} className="group flex items-center justify-between border-b border-border py-6 font-serif text-2xl text-primary md:text-3xl">{CONTACTS.phoneDisplay}<ArrowUpRight className="size-5 text-gold transition-transform group-hover:rotate-45" /></a><div className="flex gap-7 border-b border-border py-6"><a href={CONTACTS.telegramUrl} target="_blank" rel="noopener noreferrer" className="editorial-link flex items-center gap-2 text-sm text-primary"><Send className="size-4 text-gold" />Telegram</a><a href={CONTACTS.maxUrl} target="_blank" rel="noopener noreferrer" className="editorial-link flex items-center gap-2 text-sm text-primary"><MessageSquare className="size-4 text-gold" />MAX</a></div></div></div>
+          <div data-motion="reveal" className="relative border border-border bg-background p-7 md:p-12"><span className="absolute -right-5 -top-7 font-serif text-7xl text-gold/20" aria-hidden="true">06</span><div className="mb-9"><p className="text-[10px] uppercase tracking-[.22em] text-muted-foreground">Персональная консультация</p><h3 className="mt-3 font-serif text-3xl text-primary">Расскажите, что важно</h3></div><ContactForm /></div>
+        </div>
+      </section>
+    </MotionSection>
   )
 }

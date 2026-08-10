@@ -117,7 +117,7 @@ export function ContactForm({
           placeholder="Как к вам обращаться"
           aria-invalid={Boolean(errors.name)}
           aria-describedby={errors.name ? 'contact-name-error' : undefined}
-          className="rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold aria-[invalid=true]:border-destructive"
+          className="form-control placeholder:text-muted-foreground focus:border-gold aria-[invalid=true]:border-destructive"
         />
         {errors.name && (
           <p id="contact-name-error" className="text-xs text-destructive">
@@ -138,7 +138,7 @@ export function ContactForm({
           placeholder="+7 (___) ___-__-__"
           aria-invalid={Boolean(errors.phone)}
           aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
-          className="rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold aria-[invalid=true]:border-destructive"
+          className="form-control placeholder:text-muted-foreground focus:border-gold aria-[invalid=true]:border-destructive"
         />
         {errors.phone && (
           <p id="contact-phone-error" className="text-xs text-destructive">
@@ -156,7 +156,7 @@ export function ContactForm({
             id="contact-service"
             name="service"
             defaultValue={service ?? ''}
-            className="rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors focus:border-gold"
+            className="form-control focus:border-gold"
           >
             <option value="" disabled>
               Выберите услугу
@@ -182,7 +182,7 @@ export function ContactForm({
             name="message"
             rows={3}
             placeholder="Кратко опишите вашу ситуацию (необязательно)"
-            className="resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold"
+            className="resize-none form-control placeholder:text-muted-foreground focus:border-gold"
           />
         </div>
       )}
@@ -196,7 +196,7 @@ export function ContactForm({
       <button
         type="submit"
         disabled={sending}
-        className="mt-1 rounded-full bg-gold px-8 py-3.5 text-sm font-medium text-gold-foreground transition-all hover:bg-gold/90 hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+        className="premium-button mt-3 min-h-14 border border-primary bg-primary px-8 text-xs font-semibold uppercase tracking-[.14em] text-primary-foreground disabled:cursor-not-allowed disabled:opacity-60"
       >
         {sending ? 'Отправляем…' : 'Отправить заявку'}
       </button>

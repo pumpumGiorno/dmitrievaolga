@@ -1,64 +1,26 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { Reveal } from '@/components/reveal'
+import { ArrowUpRight } from 'lucide-react'
+import { MotionSection } from '@/components/motion-section'
 import { SERVICES } from '@/lib/services'
 
 export function Services() {
   return (
-    <section id="services" className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-24">
-      <Reveal>
-        <div className="mx-auto mb-12 max-w-2xl text-center">
-          <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold">Услуги</p>
-          <h2 className="mt-3 font-serif text-3xl text-primary text-balance md:text-4xl">
-            Полный цикл работы с недвижимостью
-          </h2>
-          <p className="mt-4 leading-relaxed text-muted-foreground">
-            Прозрачные условия и фиксированная стоимость услуг. Вы всегда знаете, за что платите.
-          </p>
-        </div>
-      </Reveal>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {SERVICES.map((service, i) => (
-          <Reveal key={service.id} delay={i * 80}>
-            <article className="card-lift group relative flex h-full flex-col gap-5 rounded-3xl border border-border bg-card p-7 md:p-9">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex size-12 items-center justify-center rounded-2xl bg-secondary text-gold transition-colors group-hover:bg-gold group-hover:text-gold-foreground">
-                  <service.icon className="size-6" aria-hidden="true" />
-                </div>
-                <div className="text-right">
-                  <p className="font-serif text-xl text-primary">{service.price}</p>
-                  <p className="text-xs text-muted-foreground">{service.priceNote}</p>
-                </div>
-              </div>
-              <h3 className="font-serif text-2xl text-primary">
-                <Link
-                  href={service.href}
-                  className="transition-colors hover:text-gold after:absolute after:inset-0 after:z-10"
-                >
-                  {service.title}
-                </Link>
-              </h3>
-              <p className="leading-relaxed text-muted-foreground">{service.description}</p>
-              <ul className="flex flex-col gap-2 text-sm text-foreground">
-                {service.points.map((point) => (
-                  <li key={point} className="flex items-center gap-2.5">
-                    <span className="size-1.5 rounded-full bg-gold" aria-hidden="true" />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href={service.href}
-                className="relative z-20 mt-auto inline-flex w-fit items-center gap-1.5 pt-2 text-sm font-medium text-gold transition-transform duration-300 group-hover:translate-x-1"
-              >
-                Подробнее об услуге
-                <ArrowRight className="size-4" aria-hidden="true" />
-              </Link>
+    <MotionSection className="relative overflow-hidden bg-background py-24 md:py-40">
+      <section id="services" className="section-shell">
+        <div data-motion="reveal" className="grid gap-8 md:grid-cols-[.7fr_1.3fr] md:items-end"><p className="section-label">03 / Экспертиза</p><div><h2 className="display-title max-w-4xl">Сервис, выстроенный вокруг <em className="font-normal text-gold">ваших интересов</em></h2><p className="mt-6 max-w-xl leading-7 text-muted-foreground">Прозрачные условия, фиксированная стоимость и полная ответственность за каждый этап.</p></div></div>
+        <div data-motion="line" className="my-12 h-px origin-left bg-border md:my-16" />
+        <div data-stagger className="grid border-x border-t border-border md:grid-cols-2">
+          {SERVICES.map((service, index) => (
+            <article key={service.id} className="service-card group relative flex min-h-[430px] flex-col overflow-hidden border-b border-border p-7 md:min-h-[500px] md:p-11 md:odd:border-r">
+              <div className="flex items-start justify-between"><span className="font-serif text-5xl text-primary/15 transition-colors duration-500 group-hover:text-gold/60">{String(index + 1).padStart(2, '0')}</span><service.icon className="size-7 text-gold" aria-hidden="true" /></div>
+              <h3 className="mt-12 max-w-md font-serif text-[clamp(2rem,3vw,3.2rem)] leading-[1.02] tracking-[-.03em] text-primary"><Link href={service.href} className="after:absolute after:inset-0">{service.title}</Link></h3>
+              <p className="mt-6 max-w-md text-sm leading-7 text-muted-foreground">{service.description}</p>
+              <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[11px] uppercase tracking-[.1em] text-foreground/65">{service.points.map((point) => <li key={point}>— {point}</li>)}</ul>
+              <div className="mt-auto flex items-end justify-between gap-5 border-t border-border pt-7"><div><p className="text-[10px] uppercase tracking-[.2em] text-muted-foreground">Стоимость</p><p className="mt-2 font-serif text-3xl text-primary">{service.price}</p><p className="mt-1 text-xs text-muted-foreground">{service.priceNote}</p></div><span className="flex size-12 items-center justify-center border border-gold text-gold transition-all duration-500 group-hover:bg-gold group-hover:text-gold-foreground"><ArrowUpRight className="size-5 transition-transform duration-500 group-hover:rotate-45" /></span></div>
             </article>
-          </Reveal>
-        ))}
-      </div>
-    </section>
+          ))}
+        </div>
+      </section>
+    </MotionSection>
   )
 }

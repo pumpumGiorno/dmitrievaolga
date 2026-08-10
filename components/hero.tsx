@@ -1,84 +1,28 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShieldCheck, Scale, Landmark, ChevronDown } from 'lucide-react'
+import { ArrowDownRight, ArrowRight } from 'lucide-react'
 
 export function Hero() {
   return (
-    <section id="top" className="relative flex min-h-screen items-center overflow-hidden">
-      {/* Full-bleed background photo */}
-      <Image
-        src="/images/olga-main.jpg"
-        alt="Дмитриева Ольга — эксперт по недвижимости"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-[70%_center] md:object-[75%_20%]"
-      />
-      {/* Dark gradient overlay for text readability */}
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-[#1b2330]/90 via-[#1b2330]/70 to-[#1b2330]/25"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#1b2330]/80 to-transparent"
-        aria-hidden="true"
-      />
-
-      <div className="relative mx-auto w-full max-w-6xl px-4 pb-24 pt-28 md:px-6 md:pb-28">
-        <div className="flex max-w-2xl flex-col gap-6">
-          <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold">
-            Чувашия · вся Россия · опыт более 5 лет
-          </p>
-          <h1 className="font-serif text-4xl leading-tight text-white text-balance md:text-5xl lg:text-6xl">
-            Эксперт по недвижимости Дмитриева Ольга
+    <section id="top" className="hero-stage relative min-h-[100svh] overflow-hidden bg-primary text-primary-foreground">
+      <div className="absolute inset-0">
+        <Image src="/images/olga-main.jpg" alt="Дмитриева Ольга — эксперт по недвижимости" fill priority sizes="100vw" className="hero-image object-cover object-[62%_center] md:object-[58%_20%]" />
+      </div>
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(26_35_45/.9)_0%,rgb(26_35_45/.7)_38%,rgb(26_35_45/.3)_70%,rgb(26_35_45/.08)_100%)] md:bg-[linear-gradient(90deg,rgb(26_35_45/.88)_0%,rgb(26_35_45/.62)_42%,rgb(26_35_45/.18)_74%,transparent_100%)]" aria-hidden="true" />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-primary to-transparent" aria-hidden="true" />
+      <div className="section-shell relative flex min-h-[100svh] flex-col justify-end pb-12 pt-32 md:pb-16">
+        <div className="max-w-[980px]">
+          <p className="hero-kicker section-label text-[#d5c39c]">Private real estate advisor · Россия</p>
+          <h1 className="hero-title mt-7 max-w-[920px] font-serif text-[clamp(3.6rem,7.8vw,8rem)] leading-[.86] tracking-[-.055em] text-balance">
+            Точные решения<br /><span className="ml-[9vw] italic text-[#d5c39c]">в недвижимости</span>
           </h1>
-          <p className="max-w-xl text-lg leading-relaxed text-white/85 text-pretty">
-            Комфортная, безопасная и успешная сделка под ключ. Я беру на себя все
-            организационные, юридические вопросы и вопросы с расчётами — включая сложные сделки
-            в Чувашии и по всей России.
-          </p>
-          <ul className="flex flex-col gap-3 text-sm text-white/90">
-            <li className="flex items-center gap-3">
-              <ShieldCheck className="size-5 shrink-0 text-gold" aria-hidden="true" />
-              Сделка под ключ: от первого звонка до передачи ключей
-            </li>
-            <li className="flex items-center gap-3">
-              <Scale className="size-5 shrink-0 text-gold" aria-hidden="true" />
-              В синергии с профессиональным юристом
-            </li>
-            <li className="flex items-center gap-3">
-              <Landmark className="size-5 shrink-0 text-gold" aria-hidden="true" />
-              Ипотечный брокер в команде — лучшие условия банков
-            </li>
-          </ul>
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <a
-              href="#contacts"
-              className="rounded-full bg-gold px-8 py-4 text-base font-medium text-[#1b2330] transition-all hover:opacity-90 hover:shadow-lg active:scale-[0.98]"
-            >
-              Получить консультацию
-            </a>
-            <Link
-              href="/catalog"
-              className="rounded-full border border-white/40 bg-white/10 px-8 py-4 text-base font-medium text-white backdrop-blur-sm transition-colors hover:border-gold hover:bg-white/20"
-            >
-              Каталог объектов
-            </Link>
-          </div>
-          <div className="mt-2 inline-flex w-fit items-baseline gap-3 rounded-2xl bg-white/10 px-5 py-3 backdrop-blur-sm">
-            <p className="font-serif text-2xl text-white">5+ лет</p>
-            <p className="text-xs uppercase tracking-wider text-white/70">успешных сделок</p>
+          <div className="hero-copy mt-9 grid max-w-4xl gap-8 border-t border-primary-foreground/25 pt-7 md:grid-cols-[1fr_auto] md:items-end">
+            <div><p className="text-xs uppercase tracking-[.24em] text-primary-foreground/55">Дмитриева Ольга</p><p className="mt-3 max-w-xl text-base leading-7 text-primary-foreground/78 md:text-lg">Персональное сопровождение покупки и продажи — от первого решения до передачи ключей.</p></div>
+            <div className="flex flex-wrap gap-3"><a href="#contacts" className="premium-button inline-flex min-h-13 items-center gap-3 border border-[#c9b58c] bg-[#c9b58c] px-7 text-sm font-semibold uppercase tracking-[.12em] text-primary">Консультация <ArrowRight className="size-4" /></a><Link href="/catalog" className="premium-button inline-flex min-h-13 items-center border border-primary-foreground/35 px-7 text-sm font-medium uppercase tracking-[.12em] text-primary-foreground">Объекты</Link></div>
           </div>
         </div>
+        <div className="mt-12 flex items-end justify-between gap-6"><p className="max-w-xs text-[10px] uppercase leading-5 tracking-[.2em] text-primary-foreground/45">5+ лет опыта · юридическая экспертиза · сложные сделки</p><a href="#about" className="group hidden items-center gap-3 text-[10px] uppercase tracking-[.25em] text-primary-foreground/55 md:flex">Исследовать <span className="flex size-10 items-center justify-center border border-primary-foreground/25 transition-transform duration-500 group-hover:rotate-45"><ArrowDownRight className="size-4" /></span></a></div>
       </div>
-
-      <a
-        href="#about"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 transition-colors hover:text-white"
-        aria-label="Прокрутить вниз"
-      >
-        <ChevronDown className="size-7 animate-bounce" aria-hidden="true" />
-      </a>
     </section>
   )
 }
