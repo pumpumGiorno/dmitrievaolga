@@ -248,7 +248,7 @@ export function BookingWidget() {
                       type="text"
                       autoComplete="name"
                       placeholder="Как к вам обращаться"
-                      className="rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold"
+                      className="form-control placeholder:text-muted-foreground focus:border-gold"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -261,7 +261,7 @@ export function BookingWidget() {
                       type="tel"
                       autoComplete="tel"
                       placeholder="+7 (___) ___-__-__"
-                      className="rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold"
+                      className="form-control placeholder:text-muted-foreground focus:border-gold"
                     />
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export function BookingWidget() {
                     name="comment"
                     rows={2}
                     placeholder="Кратко опишите ваш вопрос (необязательно)"
-                    className="resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-gold"
+                    className="resize-none form-control placeholder:text-muted-foreground focus:border-gold"
                   />
                 </div>
 
