@@ -24,8 +24,8 @@ export function ListingGallery({ photos, alt }: { photos: string[]; alt: string 
   const next = () => setActive((i) => (i + 1) % photos.length)
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="group relative aspect-[4/3] overflow-hidden rounded-3xl bg-secondary">
+    <div className="flex w-full max-w-xl flex-col gap-3">
+      <div className="group relative aspect-[4/3] max-h-[520px] overflow-hidden rounded-3xl bg-secondary">
         <button
           type="button"
           onClick={() => setIsOpen(true)}

@@ -285,7 +285,8 @@ async function readListings(includeDrafts = false): Promise<Listing[]> {
   photos.sort((a, b) => Number(b.isCover) - Number(a.isCover) || a.displayOrder - b.displayOrder)
   for (const photo of photos) {
     const current = photoMap.get(photo.propertyId) ?? []
-    current.push(photoUrl(photo.pathname))
+    const url = photoUrl(photo.pathname)
+    if (!current.includes(url)) current.push(url)
     photoMap.set(photo.propertyId, current)
   }
 

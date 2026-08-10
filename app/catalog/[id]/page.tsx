@@ -61,7 +61,7 @@ export default async function ListingPage({
           Назад в каталог
         </Link>
 
-        <div className="mt-6 grid gap-10 lg:grid-cols-[3fr_2fr]">
+        <div className="mt-6 grid items-start gap-10 lg:grid-cols-2">
           <ListingGallery photos={photos} alt={`${listing.title}, ${listing.location}`} />
 
           <div className="flex flex-col gap-6">
