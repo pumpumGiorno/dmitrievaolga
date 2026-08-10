@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ru" className={`bg-background ${manrope.variable} ${playfair.variable}`}>
+    <html lang="ru" data-scroll-behavior="smooth" className={`bg-background ${manrope.variable} ${playfair.variable}`}>
       <body className="antialiased">
         <ContactProvider>
           <SiteHeader />
