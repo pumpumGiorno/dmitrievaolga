@@ -1,7 +1,8 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 import { db } from '@/lib/db'
-import { hiddenListings } from '@/lib/db/schema'
+import { properties, propertyPhotos, hiddenListings } from '@/lib/db/schema'
+import { asc, eq, inArray } from 'drizzle-orm'
 import type { Listing, ListingStatus } from '@/lib/listing-types'
 
 export type { Listing, ListingStatus } from '@/lib/listing-types'
@@ -168,7 +169,7 @@ async function getHiddenIds(): Promise<Set<string>> {
   }
 }
 
-export async function getListings(): Promise<Listing[]> {
+async function getLegacyListings(): Promise<Listing[]> {
   const filePath = path.join(process.cwd(), 'data', 'объявления.txt')
   let raw: string
   try {
@@ -196,16 +197,136 @@ export async function getListings(): Promise<Listing[]> {
     if (photos.length === 0) continue
     listings.push({
       id,
+      slug: id,
       url,
       status: STATUS_MAP[id] ?? 'Активно',
+      publicationStatus: 'published',
       photos,
+      address: null,
+      price: null,
+      priceOnRequest: true,
+      floor: null,
+      floors: null,
+      landArea: null,
+      landCategory: null,
+      shortDescription: null,
+      seoTitle: null,
+      seoDescription: null,
+      displayOrder: listings.length,
       ...parsed,
     })
   }
   return listings
 }
 
-export async function getListing(id: string): Promise<Listing | null> {
+function photoUrl(pathname: string) {
+  return pathname.startsWith('/') || pathname.startsWith('http')
+    ? pathname
+    : `/api/property-image?pathname=${encodeURIComponent(pathname)}`
+}
+
+async function seedLegacyListings() {
+  const existing = await db.select({ id: properties.id }).from(properties).limit(1)
+  if (existing.length > 0) return
+
+  const legacy = await getLegacyListings()
+  if (legacy.length === 0) return
+
+  await db.insert(properties).values(
+    legacy.map((listing) => ({
+      id: listing.id,
+      slug: listing.slug,
+      externalUrl: listing.url,
+      category: listing.category,
+      title: listing.title,
+      location: listing.location,
+      address: listing.address,
+      price: listing.price,
+      priceOnRequest: listing.priceOnRequest,
+      areaValue: listing.areaValue,
+      rooms: listing.rooms,
+      floor: listing.floor,
+      floors: listing.floors,
+      landArea: listing.landArea,
+      landCategory: listing.landCategory,
+      shortDescription: listing.shortDescription,
+      description: listing.description,
+      attributes: listing.attributes,
+      status: listing.status,
+      publicationStatus: listing.publicationStatus,
+      seoTitle: listing.seoTitle,
+      seoDescription: listing.seoDescription,
+      imageQuery: listing.imageQuery,
+      displayOrder: listing.displayOrder,
+    })),
+  ).onConflictDoNothing()
+
+  await db.insert(propertyPhotos).values(
+    legacy.flatMap((listing) =>
+      listing.photos.map((pathname, index) => ({
+        propertyId: listing.id,
+        pathname,
+        displayOrder: index,
+        isCover: index === 0,
+      })),
+    ),
+  ).onConflictDoNothing()
+}
+
+async function readListings(includeDrafts = false): Promise<Listing[]> {
+  await seedLegacyListings()
+  const rows = await db.select().from(properties).orderBy(asc(properties.displayOrder), asc(properties.createdAt))
+  const visible = includeDrafts ? rows : rows.filter((row) => row.publicationStatus === 'published' && !['Снято', 'Продано'].includes(row.status))
+  const ids = visible.map((row) => row.id)
+  const photos = ids.length
+    ? await db.select().from(propertyPhotos).where(inArray(propertyPhotos.propertyId, ids)).orderBy(asc(propertyPhotos.displayOrder))
+    : []
+  const photoMap = new Map<string, string[]>()
+  photos.sort((a, b) => Number(b.isCover) - Number(a.isCover) || a.displayOrder - b.displayOrder)
+  for (const photo of photos) {
+    const current = photoMap.get(photo.propertyId) ?? []
+    current.push(photoUrl(photo.pathname))
+    photoMap.set(photo.propertyId, current)
+  }
+
+  return visible.map((row) => ({
+    id: row.id,
+    slug: row.slug,
+    url: row.externalUrl ?? '',
+    category: row.category as Listing['category'],
+    title: row.title,
+    location: row.location,
+    address: row.address,
+    price: row.price,
+    priceOnRequest: row.priceOnRequest,
+    attributes: row.attributes,
+    rooms: row.rooms,
+    areaValue: row.areaValue,
+    floor: row.floor,
+    floors: row.floors,
+    landArea: row.landArea,
+    landCategory: row.landCategory,
+    status: row.status as Listing['status'],
+    publicationStatus: row.publicationStatus as Listing['publicationStatus'],
+    shortDescription: row.shortDescription,
+    description: row.description,
+    photos: photoMap.get(row.id) ?? [],
+    imageQuery: row.imageQuery,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    displayOrder: row.displayOrder,
+  }))
+}
+
+export async function getListings(): Promise<Listing[]> {
+  return readListings(false)
+}
+
+export async function getAdminListings(): Promise<Listing[]> {
+  return readListings(true)
+}
+
+export async function getListing(idOrSlug: string): Promise<Listing | null> {
   const listings = await getListings()
-  return listings.find((l) => l.id === id) ?? null
+  return listings.find((listing) => listing.id === idOrSlug || listing.slug === idOrSlug) ?? null
 }

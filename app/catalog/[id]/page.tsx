@@ -12,6 +12,8 @@ const STATUS_STYLES: Record<ListingStatus, string> = {
   Активно: 'bg-secondary text-primary',
   Эксклюзив: 'bg-gold text-gold-foreground',
   'Снижение цены': 'bg-primary text-primary-foreground',
+  Продано: 'bg-primary text-primary-foreground',
+  Снято: 'bg-muted text-muted-foreground',
 }
 
 export async function generateStaticParams() {
@@ -28,8 +30,8 @@ export async function generateMetadata({
   const listing = await getListing(id)
   if (!listing) return { title: 'Объект не найден' }
   return {
-    title: `${listing.title}, ${listing.location} — Дмитриева Ольга`,
-    description: listing.description,
+    title: listing.seoTitle || `${listing.title}, ${listing.location} — Дмитриева Ольга`,
+    description: listing.seoDescription || listing.shortDescription || listing.description,
   }
 }
 
@@ -105,7 +107,11 @@ export default async function ListingPage({
 
             <div className="rounded-3xl border border-gold/40 bg-card p-6">
               <p className="text-sm text-muted-foreground">Стоимость</p>
-              <p className="mt-1 font-serif text-2xl text-primary">По запросу</p>
+              <p className="mt-1 font-serif text-2xl text-primary">
+                {listing.priceOnRequest || listing.price == null
+                  ? 'По запросу'
+                  : `${new Intl.NumberFormat('ru-RU').format(listing.price)} ₽`}
+              </p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 Свяжитесь со мной — назову актуальную цену, расскажу об истории объекта и
                 организую показ в удобное время.
@@ -124,15 +130,17 @@ export default async function ListingPage({
                   <Phone className="size-4 text-gold" aria-hidden="true" />
                   Позвонить: {CONTACTS.phoneDisplay}
                 </a>
-                <a
-                  href={listing.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-full border border-primary/20 px-8 py-3.5 text-sm font-medium text-primary transition-colors hover:border-gold hover:bg-secondary"
-                >
-                  Объявление на Авито
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </a>
+                {listing.url ? (
+                  <a
+                    href={listing.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-full border border-primary/20 px-8 py-3.5 text-sm font-medium text-primary transition-colors hover:border-gold hover:bg-secondary"
+                  >
+                    Объявление на Авито
+                    <ArrowUpRight className="size-4" aria-hidden="true" />
+                  </a>
+                ) : null}
               </div>
             </div>
 

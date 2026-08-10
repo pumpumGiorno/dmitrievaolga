@@ -5,11 +5,24 @@ import { leads } from '@/lib/db/schema'
 import { desc } from 'drizzle-orm'
 import { cookies } from 'next/headers'
 import { sendSmsNotification } from '@/lib/notify'
+import { createHmac, timingSafeEqual } from 'node:crypto'
 
 const ADMIN_COOKIE = 'olga_admin'
 
 function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD || 'olga2026'
+  const password = process.env.ADMIN_PASSWORD || process.env.password
+  if (!password) throw new Error('Admin password is not configured')
+  return password
+}
+
+function sessionToken() {
+  return createHmac('sha256', getAdminPassword()).update('olga-admin-session-v1').digest('hex')
+}
+
+function safeEqual(value: string, expected: string) {
+  const left = Buffer.from(value)
+  const right = Buffer.from(expected)
+  return left.length === right.length && timingSafeEqual(left, right)
 }
 
 export async function createLead(input: {
@@ -46,9 +59,9 @@ export async function createLead(input: {
 }
 
 export async function adminSignIn(password: string): Promise<{ ok: boolean }> {
-  if (password !== getAdminPassword()) return { ok: false }
+  if (!safeEqual(password, getAdminPassword())) return { ok: false }
   const cookieStore = await cookies()
-  cookieStore.set(ADMIN_COOKIE, getAdminPassword(), {
+  cookieStore.set(ADMIN_COOKIE, sessionToken(), {
     httpOnly: true,
     secure: true,
     sameSite: 'none',
@@ -58,9 +71,15 @@ export async function adminSignIn(password: string): Promise<{ ok: boolean }> {
   return { ok: true }
 }
 
+export async function adminSignOut() {
+  const cookieStore = await cookies()
+  cookieStore.delete(ADMIN_COOKIE)
+}
+
 export async function isAdmin(): Promise<boolean> {
   const cookieStore = await cookies()
-  return cookieStore.get(ADMIN_COOKIE)?.value === getAdminPassword()
+  const value = cookieStore.get(ADMIN_COOKIE)?.value
+  return value ? safeEqual(value, sessionToken()) : false
 }
 
 export async function getLeads() {
