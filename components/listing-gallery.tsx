@@ -68,7 +68,7 @@ export function ListingGallery({ photos, alt }: { photos: string[]; alt: string 
         <div className="flex gap-2 overflow-x-auto pb-1">
           {photos.map((photo, i) => (
             <button
-              key={photo}
+              key={`${photo}-${i}`}
               type="button"
               onClick={() => setActive(i)}
               aria-label={`Показать фото ${i + 1}`}
