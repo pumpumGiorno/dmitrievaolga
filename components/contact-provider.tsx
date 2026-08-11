@@ -4,7 +4,6 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 import { X, CheckCircle2, Phone } from 'lucide-react'
 import { SERVICES } from '@/lib/services'
 import { CONTACTS } from '@/lib/contacts'
-import { createLead } from '@/app/actions/leads'
 
 interface ContactPayload {
   /** Human-readable subject, e.g. "Объект: 2-комнатная квартира, Чебоксары" */
@@ -53,9 +52,11 @@ export function ContactForm({
   const [sending, setSending] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
   const [errors, setErrors] = useState<FormErrors>({})
+  const submittedAt = useRef(Date.now())
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (sending) return
     const form = event.currentTarget
     const data = new FormData(form)
     const name = String(data.get('name') ?? '')
@@ -66,21 +67,32 @@ export function ContactForm({
     if (Object.keys(nextErrors).length > 0) return
 
     setSending(true)
-    const result = await createLead({
-      name,
-      phone,
-      message: String(data.get('message') ?? ''),
-      subject,
-      service: String(data.get('service') ?? '') || service,
-    })
-    setSending(false)
-
-    if (!result.ok) {
-      setServerError(result.error ?? 'Не удалось отправить заявку. Попробуйте позвонить.')
-      return
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          phone,
+          message: String(data.get('message') ?? ''),
+          subject,
+          service: String(data.get('service') ?? '') || service || '',
+          website: String(data.get('website') ?? ''),
+          submittedAt: submittedAt.current,
+        }),
+      })
+      const result = (await response.json()) as { success: boolean; error?: string }
+      if (!response.ok || !result.success) {
+        setServerError(result.error ?? 'Не удалось отправить заявку. Попробуйте позвонить.')
+        return
+      }
+      setSubmitted(true)
+      onSuccess?.()
+    } catch {
+      setServerError('Не удалось отправить заявку. Проверьте подключение и попробуйте снова.')
+    } finally {
+      setSending(false)
     }
-    setSubmitted(true)
-    onSuccess?.()
   }
 
   if (submitted) {
@@ -91,7 +103,7 @@ export function ContactForm({
         </span>
         <h3 className="font-serif text-2xl text-primary">Заявка принята</h3>
         <p className="max-w-sm leading-relaxed text-muted-foreground">
-          Ольга свяжется с вами в течение 15 минут в рабочее время.
+          Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.
         </p>
       </div>
     )
@@ -99,6 +111,14 @@ export function ContactForm({
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px]"
+      />
       {subject && (
         <p className="rounded-xl bg-secondary px-4 py-3 text-sm text-secondary-foreground">
           {subject}
