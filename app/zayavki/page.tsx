@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import { getLeads, isAdmin } from '@/app/actions/leads'
+import { isAdmin } from '@/app/actions/leads'
 import { getAppointments } from '@/app/actions/appointments'
 import { AdminLogin } from '@/components/admin-login'
-import { LeadsTable } from '@/components/leads-table'
 import { AppointmentsTable } from '@/components/appointments-table'
 
 export const metadata: Metadata = {
@@ -23,7 +22,7 @@ export default async function ZayavkiPage() {
     )
   }
 
-  const [rows, upcoming] = await Promise.all([getLeads(), getAppointments()])
+  const upcoming = await getAppointments()
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-24 md:px-6">
@@ -35,16 +34,6 @@ export default async function ZayavkiPage() {
       </p>
       <div className="mt-8">
         <AppointmentsTable rows={upcoming} />
-      </div>
-
-      <h2 className="mt-16 font-serif text-3xl text-primary md:text-4xl">Заявки с сайта</h2>
-      <p className="mt-2 text-muted-foreground">
-        {rows.length > 0
-          ? `Всего заявок: ${rows.length}. Новые сверху.`
-          : 'Заявок пока нет. Как только кто-то оставит заявку на сайте, она появится здесь.'}
-      </p>
-      <div className="mt-8">
-        <LeadsTable rows={rows} />
       </div>
     </main>
   )

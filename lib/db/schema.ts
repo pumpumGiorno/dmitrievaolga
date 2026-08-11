@@ -1,17 +1,5 @@
 import { boolean, date, doublePrecision, integer, jsonb, pgTable, serial, text, timestamp, unique } from 'drizzle-orm/pg-core'
 
-export const leads = pgTable('leads', {
-  id: serial('id').primaryKey(),
-  name: text('name').notNull(),
-  phone: text('phone').notNull(),
-  message: text('message'),
-  subject: text('subject'),
-  service: text('service'),
-  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
-})
-
-export type Lead = typeof leads.$inferSelect
-
 export const appointments = pgTable(
   'appointments',
   {
